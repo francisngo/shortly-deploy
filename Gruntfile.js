@@ -5,9 +5,24 @@ module.exports = function(grunt) {
     concat: {
       dist: {
         src: [
-          'public/client/*.js',
+          'public/lib/jquery.js',
+          'public/lib/underscore.js',
+          'public/lib/backbone.js',
+          'public/lib/handlebars.js'
         ],
-        dest: 'dist/built.js'
+        dest: 'public/dist/built.js'
+      },
+      extra: {
+        src: [
+          'public/client/app.js',
+          'public/client/link.js',
+          'public/client/links.js',
+          'public/client/linkView.js',
+          'public/client/linksView.js',
+          'public/client/createLinkView.js',
+          'public/client/router.js',
+        ],
+        dest: 'public/dist/client.js'
       }
     },
 
@@ -27,6 +42,12 @@ module.exports = function(grunt) {
     },
 
     uglify: {
+      dist: {
+        files: {
+          'public/dist/built.min.js': ['public/dist/built.js'],
+          'public/dist/client.min.js': ['public/dist/client.js']
+        }
+      }
     },
 
     eslint: {
@@ -36,8 +57,8 @@ module.exports = function(grunt) {
         'app/collection/*.js',
         'app/models/*,js',
         'app/*.js',
-        'server-config.js',
-        'server.js'
+        './server-config.js',
+        './server.js'
       ]
     },
 
@@ -89,8 +110,8 @@ module.exports = function(grunt) {
   ]);
 
   grunt.registerTask('build', [
-    'test',
     'eslint',
+    'test',
     'concat',
     'uglify'
   ]);
@@ -105,6 +126,7 @@ module.exports = function(grunt) {
 
   grunt.registerTask('deploy', [
     // add your deploy tasks here
+    'build'
   ]);
 
 
